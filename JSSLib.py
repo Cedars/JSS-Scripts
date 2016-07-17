@@ -7,6 +7,10 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 # Quieten down insecure request warnings due to unverified SSL
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
+######################################################
+#mark Settings
+######################################################
+
 # This function should return https://my.jss.com:8443/JSSResource 
 # The base URL for JSS API interactions
 def jssURL():
@@ -32,6 +36,10 @@ def jssPassword():
 def verifySSL():
 	return False
 	
+	
+######################################################
+#mark JSS Primitives
+######################################################
 def jsonHeaders():
 	requestHeaders = {
 		'Content-Type': 'application/json',
@@ -76,8 +84,7 @@ def runPutCommand(command_url, command_data):
 
 def runDeleteCommand(command_url):
 	request = requests.delete('%s/%s' % (jssURL(), command_url),  headers=xmlHeaders(), verify=verifySSL(), auth=(jssUser(), jssPassword()))
-
-	if request.status_code == 201:
+	if request.status_code == 200:
 		return request.status_code
 	else:
 		raise Exception(
@@ -85,7 +92,7 @@ def runDeleteCommand(command_url):
 		)
 	
 ######################################################
-## Mobile Devices
+#mark Mobile Devices
 ######################################################
 # Returns a list of all mobile devices in the JSS
 def list_mobile_devices():
@@ -118,7 +125,7 @@ def assign_device_to_user_by_serial(device_serial, username):
 	assign_device_to_user(device_info['id'], username)
 
 ######################################################
-## JSS Users
+#mark JSS Users
 ######################################################
 # Returns a list of all users in the JSS
 def get_users():
@@ -142,7 +149,7 @@ def create_user(username, email, fullname, graduation_year, role):
 	return runPostCommand(userCommand, extensionAttributesXML)
 	
 ######################################################
-## Mobile Apps
+#mark Mobile Apps
 ######################################################
 def get_apps():
 	return runGetCommand('mobiledeviceapplications', 'mobile_device_applications')
