@@ -113,7 +113,7 @@ def modify_device_name(device_id, new_name):
 
 def modify_device_name_by_serial(device_serial, new_name):
 	device_info = get_mobile_device_info_by_serial(device_serial)
-	modify_device_name(device_info['id'], new_name)
+	modify_device_name(device_info['general']['id'], new_name)
 
 # Assigns a device to a user given a JSS ID for the device and a username
 def assign_device_to_user(device_id, username):
@@ -122,7 +122,7 @@ def assign_device_to_user(device_id, username):
 
 def assign_device_to_user_by_serial(device_serial, username):
 	device_info = get_mobile_device_info_by_serial(device_serial)
-	assign_device_to_user(device_info['id'], username)
+	assign_device_to_user(device_info['general']['id'], username)
 
 ######################################################
 #mark JSS Users
@@ -145,7 +145,6 @@ def delete_user(user_id):
 def create_user(username, email, fullname, graduation_year, role):
 	userCommand = 'users/id/0'
 	extensionAttributesXML = '<user><name>%s</name><email>%s</email><full_name>%s</full_name><extension_attributes><attribute><name>Graduation Year</name><value>%s</value></attribute><attribute><name>Role</name><value>%s</value></attribute></extension_attributes></user>' % (username, email, fullname, graduation_year, role)
-	print extensionAttributesXML
 	return runPostCommand(userCommand, extensionAttributesXML)
 	
 ######################################################
