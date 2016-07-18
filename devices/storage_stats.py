@@ -5,7 +5,7 @@ sys.path.insert(0, '../lib')
 import JSSLib
 
 # Get all devices in JSS
-devices = JSSLib.list_mobile_devices()
+devices = JSSLib.get_mobile_devices()
 
 stats = {}
 

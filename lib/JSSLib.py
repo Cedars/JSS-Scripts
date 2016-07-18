@@ -95,7 +95,7 @@ def runDeleteCommand(command_url):
 #mark Mobile Devices
 ######################################################
 # Returns a list of all mobile devices in the JSS
-def list_mobile_devices():
+def get_mobile_devices():
 	return runGetCommand("mobiledevices", "mobile_devices")
 
 # Returns info for a mobile device given a JSS ID
