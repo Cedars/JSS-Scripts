@@ -186,3 +186,14 @@ def set_take_over_management(app_id, state):
 	command = 'mobiledeviceapplications/id/%s' % app_id
 	data = '<mobile_device_application><general><take_over_management>%s</take_over_management></general></mobile_device_application>'
 	return runPutCommand(command, data)
+
+######################################################
+#mark Configuration Profiles
+######################################################
+def get_configuration_profiles():
+	profilesCommand = 'mobiledeviceconfigurationprofiles'
+	return runGetCommand(profilesCommand, 'configuration_profiles')
+
+def get_configuration_profile(profile_id):
+	profilesCommand = 'mobiledeviceconfigurationprofiles/id/%s' % profile_id
+	return runGetCommand(profilesCommand, 'configuration_profile')
