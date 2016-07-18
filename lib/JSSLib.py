@@ -182,9 +182,17 @@ def get_apps():
 def get_app_info(app_id):
 	return runGetCommand('mobiledeviceapplications/id/%s' % app_id, 'mobile_device_application')
 
+def get_app_info_subset(app_id, subset):
+	return runGetCommand('mobiledeviceapplications/id/%s/subset/%s' % (app_id, subset), 'mobile_device_application')
+
 def set_take_over_management(app_id, state):
 	command = 'mobiledeviceapplications/id/%s' % app_id
-	data = '<mobile_device_application><general><take_over_management>%s</take_over_management></general></mobile_device_application>'
+	data = '<mobile_device_application><general><take_over_management>%s</take_over_management></general></mobile_device_application>' % state
+	return runPutCommand(command, data)
+
+def set_device_assignment_for_app(app_id, state, admin_account_id=1):
+	command = 'mobiledeviceapplications/id/%s' % app_id
+	data = '<mobile_device_application><vpp><assign_vpp_device_based_licenses>%s</assign_vpp_device_based_licenses><vpp_admin_account_id>%s</vpp_admin_account_id></vpp></mobile_device_application>' % (state, admin_account_id)
 	return runPutCommand(command, data)
 
 ######################################################
