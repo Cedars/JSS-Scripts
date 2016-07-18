@@ -124,6 +124,18 @@ def assign_device_to_user_by_serial(device_serial, username):
 	device_info = get_mobile_device_info_by_serial(device_serial)
 	assign_device_to_user(device_info['general']['id'], username)
 
+def get_device_storage_used_percentage(device_id):
+	device_info = mobile_device_info(device_id)
+	return device_info['general']['percentage_used']
+
+def get_device_capacity(device_id):
+	device_info = mobile_device_info(device_id)
+	return device_info['general']['capacity']
+
+def get_device_assigned_user(device_id):
+	device_info = mobile_device_info(device_id)
+	return device_info['location']['username']
+	
 ######################################################
 #mark JSS Users
 ######################################################
@@ -135,6 +147,16 @@ def get_users():
 def get_user_by_username(username):
 	userURL = 'users/name/%s' % username
 	return runGetCommand(userURL, 'user')
+
+# Returns a user's extension attributes as a dictionary of {name, value}
+def get_user_extension_attributes(user_id):
+	userURL = 'users/id/%s' % user_id
+	user = runGetCommand(userURL, 'user')
+	eas = user['extension_attributes']
+	dictionary_atts = {}
+	for e in eas:
+		dictionary_atts[e['name']] = e['value']
+	return dictionary_atts
 
 # Delete User by ID
 def delete_user(user_id):
