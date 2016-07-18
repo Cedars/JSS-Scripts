@@ -99,7 +99,7 @@ def get_mobile_devices():
 	return runGetCommand("mobiledevices", "mobile_devices")
 
 # Returns info for a mobile device given a JSS ID
-def mobile_device_info(device_id):
+def get_mobile_device_info(device_id):
 	return runGetCommand('mobiledevices/id/%s' % device_id, 'mobile_device')
 
 # Returns info for a mobile device given a Serial Number
@@ -125,15 +125,15 @@ def assign_device_to_user_by_serial(device_serial, username):
 	assign_device_to_user(device_info['general']['id'], username)
 
 def get_device_storage_used_percentage(device_id):
-	device_info = mobile_device_info(device_id)
+	device_info = get_mobile_device_info(device_id)
 	return device_info['general']['percentage_used']
 
 def get_device_capacity(device_id):
-	device_info = mobile_device_info(device_id)
+	device_info = get_mobile_device_info(device_id)
 	return device_info['general']['capacity']
 
 def get_device_assigned_user(device_id):
-	device_info = mobile_device_info(device_id)
+	device_info = get_mobile_device_info(device_id)
 	return device_info['location']['username']
 	
 ######################################################
