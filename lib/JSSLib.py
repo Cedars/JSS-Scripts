@@ -143,6 +143,11 @@ def get_device_assigned_user(device_id):
 def get_users():
 	return runGetCommand('users', 'users')
 
+# Returns a user by JSS ID
+def get_user(user_id):
+	userURL = 'users/id/%s' % user_id
+	return runGetCommand(userURL, 'user')
+
 # Returns a user by username
 def get_user_by_username(username):
 	userURL = 'users/name/%s' % username
@@ -150,8 +155,7 @@ def get_user_by_username(username):
 
 # Returns a user's extension attributes as a dictionary of {name, value}
 def get_user_extension_attributes(user_id):
-	userURL = 'users/id/%s' % user_id
-	user = runGetCommand(userURL, 'user')
+	user = get_user(user_id)
 	eas = user['extension_attributes']
 	dictionary_atts = {}
 	for e in eas:
