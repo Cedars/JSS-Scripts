@@ -32,4 +32,4 @@ with open('user_assignments.csv', 'rb') as csvfile:
 		
 		# Rename Device to User's Full Name
 		print 'Setting name of %s to %s' % (assignment['serial'], user_full_name)
-		JSSLib.modify_device_name(device_id, user_full_name)
+		JSSLib.set_device_name(device_id, user_full_name)

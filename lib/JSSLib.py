@@ -107,13 +107,13 @@ def get_mobile_device_info_by_serial(serial):
 	return runGetCommand('mobiledevices/serialnumber/%s' % serial, 'mobile_device')
 
 # Modifies the name of the a mobile device given a JSS ID and new name
-def modify_device_name(device_id, new_name):
+def set_device_name(device_id, new_name):
 	deviceNameURL = 'mobiledevicecommands/command/DeviceName/%s/id/%s' % (new_name, device_id)
 	runPostCommand(deviceNameURL)
 
 def modify_device_name_by_serial(device_serial, new_name):
 	device_info = get_mobile_device_info_by_serial(device_serial)
-	modify_device_name(device_info['general']['id'], new_name)
+	set_device_name(device_info['general']['id'], new_name)
 
 # Assigns a device to a user given a JSS ID for the device and a username
 def assign_device_to_user(device_id, username):
