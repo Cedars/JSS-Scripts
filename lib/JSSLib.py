@@ -197,3 +197,50 @@ def get_configuration_profiles():
 def get_configuration_profile(profile_id):
 	profilesCommand = 'mobiledeviceconfigurationprofiles/id/%s' % profile_id
 	return runGetCommand(profilesCommand, 'configuration_profile')
+
+######################################################
+#mark Device Groups
+######################################################
+def get_device_groups():
+	return runGetCommand('mobiledevicegroups', 'mobile_device_groups')
+
+# Returns only the groups that are smart
+def get_smart_device_groups():
+	return filter(lambda g:g['is_smart'] == True, get_device_groups())
+
+# Returns only the groups that are static
+def get_static_device_groups():
+	return filter(lambda g:g['is_smart'] == False, get_device_groups())
+
+# Returns a group by ID
+def get_device_group(group_id):
+	return runGetCommand('mobiledevicegroups/id/%s' % group_id, 'mobile_device_group')
+
+# Creates a Smart Group given specified criteria
+#
+# The criteria parameter is an array of dictionaries. The keys are:
+# name 			- the name of the criterion
+# and_or 		- the combining criteria for this row
+# search_type 	- is/is not/like/not like
+# value 		- the value to match
+def create_smart_device_group(name, criteria):
+	criteriaXML = []
+	priority = 0
+	for criterion in criteria:
+		criteriaXML.append(generate_criterion_xml(criterion, priority))
+		priority += 1
+
+	createGroupXML = '<mobile_device_group><name>%s</name><is_smart>true</is_smart><criteria>%s</criteria><mobile_devices /></mobile_device_group>' % (name, ''.join(criteriaXML))
+	print createGroupXML
+	commandURL = 'mobiledevicegroups/id/0'
+	result = runPostCommand(commandURL, createGroupXML)
+	print result
+
+# Internal Use	
+def generate_criterion_xml(crit, priority):
+	return '<criterion><name>%s</name><priority>%s</priority><and_or>%s</and_or><search_type>%s</search_type><value>%s</value></criterion>' % (crit['name'], priority, crit['and_or'], crit['search_type'], crit['value'])
+
+# Deletes a Device Group
+def delete_device_group(group_id):
+	deleteCommand = 'mobiledevicegroups/id/%s' % group_id
+	return runDeleteCommand(deleteCommand)
