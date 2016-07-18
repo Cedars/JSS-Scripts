@@ -156,11 +156,11 @@ def get_user_by_username(username):
 # Returns a user's extension attributes as a dictionary of {name, value}
 def get_user_extension_attributes(user_id):
 	user = get_user(user_id)
-	eas = user['extension_attributes']
-	dictionary_atts = {}
-	for e in eas:
-		dictionary_atts[e['name']] = e['value']
-	return dictionary_atts
+	extension_attributes = user['extension_attributes']
+	user_attributes = {}
+	for attribute in extension_attributes:
+		user_attributes[attribute['name']] = attribute['value']
+	return user_attributes
 
 # Delete User by ID
 def delete_user(user_id):
