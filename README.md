@@ -14,9 +14,12 @@ In any year, individual groups of users in a specific class are formed by creati
 
 ## Configuration Profile Scoping
 
-There are two kinds of Configuration Profile scopes:
+There are three kinds of Configuration Profile scopes:
 
 * Universal Profiles
 * Conditional Profiles
+* User-scoped Profiles
 
-Universal Profiles are scoped to all (student) iPads unconditionally. Conditional Profiles are scoped to certain groups of users or devices based on certain conditions.
+Universal Profiles are scoped to all (student) iPads unconditionally. Conditional Profiles are scoped to certain groups of devices based on certain conditions expressed in Smart Groups.
+
+User-scoped profiles are scoped to users rather than to devices. This ensures that unconfigured devices still have the appropriate security profiles applied without any personal information - such as email addresses - being on the device.
