@@ -9,6 +9,8 @@ devices = JSSLib.get_mobile_devices()
 
 stats = {}
 
+print 'Getting storage stats for %s devices.' % len(devices)
+
 for d in devices:
 	percent_used = JSSLib.get_device_storage_used_percentage(d['id'])
 	user_name = JSSLib.get_device_assigned_user(d['id'])
@@ -18,6 +20,9 @@ for d in devices:
 	
 	user_id = JSSLib.get_user_by_username(user_name)['id']
 	graduation_year = JSSLib.get_user_extension_attributes(user_id)['Graduation Year']
+	
+	# Show progress
+	print '.'
 	
 	if not graduation_year in stats.keys():
 		stats[graduation_year] = (0,0)
