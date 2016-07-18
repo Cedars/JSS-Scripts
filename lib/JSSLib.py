@@ -111,7 +111,7 @@ def set_device_name(device_id, new_name):
 	deviceNameURL = 'mobiledevicecommands/command/DeviceName/%s/id/%s' % (new_name, device_id)
 	runPostCommand(deviceNameURL)
 
-def modify_device_name_by_serial(device_serial, new_name):
+def set_device_name_by_serial(device_serial, new_name):
 	device_info = get_mobile_device_info_by_serial(device_serial)
 	set_device_name(device_info['general']['id'], new_name)
 

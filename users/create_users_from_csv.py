@@ -23,4 +23,4 @@ with open('limited_jss_users.csv', 'rb') as csvfile:
 		
 		# Now assign the device to the users
 		JSSLib.assign_device_to_user_by_serial(user['device_serial'], user['username'])
-		JSSLib.modify_device_name_by_serial(user['device_serial'], user['fullname'])
+		JSSLib.set_device_name_by_serial(user['device_serial'], user['fullname'])
