@@ -12,6 +12,9 @@ import csv
 # The expected format of the CSV is:
 #
 #	username,full-name,graduation-year,role,device-serial
+#
+# If a device with the given serial number is found in JSS, that device will be
+# assigned to the created user.
 
 # Firstly, parse the CSV
 with open('limited_jss_users.csv', 'rb') as csvfile:
