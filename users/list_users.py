@@ -6,4 +6,7 @@ sys.path.insert(0, '../lib')
 
 import JSSLib
 
-print JSSLib.get_users()
+users = JSSLib.get_users()
+users = sorted(users, key=lambda u: u['name'])
+for u in users:
+	print '%s (%s)' % (u['name'], u['id'])
