@@ -28,9 +28,9 @@ debug_username = 'ls'
 # Set JSS Variables here
 # JSS URL must end with / like so:
 # https://jss.example.com:8443/
-jssURL = 'https://mdm.cedars.inverclyde.sch.uk:8443/'
-jssAPIUsername = 'mdmadmin'
-jssAPIPassword = 'k32-ZKg-MDa-AkX'
+jssURL = ''
+jssAPIUsername = ''
+jssAPIPassword = ''
 
 # I have my own JSS Module for easy code publishing
 try:
