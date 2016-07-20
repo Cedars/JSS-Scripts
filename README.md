@@ -6,14 +6,14 @@ This repository contains scripts and documentation for managing our JSS.
 
 These scripts should be usable on most Python installations that:
 
-* Have the requests library installed
+* Have the [requests](http://docs.python-requests.org/en/master/) library installed
 * Have JSS-Scripts/lib in your PYTHONPATH
 
 JSS authentication is handled by defining three environment variables:
 
-* MDM_URL - should be of the form https://my.jss.com:8443/JSSResource - no trailing slash
-* MDM_USER - username of an account with API privileges
-* MDM_PASSWORD - password for $MDM_USER
+* `MDM_URL` - should be of the form https://my.jss.com:8443/JSSResource - no trailing slash
+* `MDM_USER` - username of an account with API privileges
+* `MDM_PASSWORD` - password for $MDM_USER
 
 [_Editor's note: what follows is a partial set of notes-to-self about the structure of our JSS that may explain some of the scripts_]
 
