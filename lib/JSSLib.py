@@ -2,10 +2,32 @@
 import json
 import os
 import requests
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 # Quieten down insecure request warnings due to unverified SSL
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+
+######################################################
+# JSSLib.py
+#
+# This is a Python library for accessing and manipulating various structures
+# in an installation of the Casper Suite from JAMF Software.
+#
+# Some of the functions are specific to the particular structure of our JSS but
+# you will see that they are composed from the more generic primitives in the 
+# library.
+#
+# You can learn more about the JSS API at https://your.mdm.com:8443/api
+#
+# Author: Fraser Speirs
+# Email: fs@cedars.inverclyde.sch.uk
+#
+# Cedars School of Excellence accepts no responsibility for the operation of these
+# scripts.
+#
+######################################################
+
+
 
 ######################################################
 #mark Settings
@@ -14,7 +36,7 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 # This function should return https://my.jss.com:8443/JSSResource 
 # The base URL for JSS API interactions
 def jssURL():
-	url = os.environ.get('JSS_URL')
+	url = os.environ.get('MDM_URL')
 	if url == None:
 		print 'Please define $MDM_URL or override jssURL()'
 	else:
@@ -153,7 +175,7 @@ def get_user_by_username(username):
 	userURL = 'users/name/%s' % username
 	return runGetCommand(userURL, 'user')
 
-# Returns a user's extension attributes as a dictionary of {name, value}
+# Returns a user's extension attributes as a dictionary with the keys (name, value)
 def get_user_extension_attributes(user_id):
 	user = get_user(user_id)
 	extension_attributes = user['extension_attributes']
@@ -179,17 +201,24 @@ def create_user(username, email, fullname, graduation_year, role):
 def get_apps():
 	return runGetCommand('mobiledeviceapplications', 'mobile_device_applications')
 
+# Get all the info for an app in the JSS
 def get_app_info(app_id):
 	return runGetCommand('mobiledeviceapplications/id/%s' % app_id, 'mobile_device_application')
 
+# Returns a subset of the app's info. This function typically runs much faster than get_app_info()
 def get_app_info_subset(app_id, subset):
 	return runGetCommand('mobiledeviceapplications/id/%s/subset/%s' % (app_id, subset), 'mobile_device_application')
 
+# Attempts to set the "make managed when unmanaged" flag for an app.
+# USE WITH CAUTION - LIGHTLY TESTED
 def set_take_over_management(app_id, state):
 	command = 'mobiledeviceapplications/id/%s' % app_id
 	data = '<mobile_device_application><general><take_over_management>%s</take_over_management></general></mobile_device_application>' % state
 	return runPutCommand(command, data)
 
+# Sets the device-assignment flag for a given app.
+# If you have multiple VPP accounts, pass the JSS ID of the 
+# VPP account to assign licenses from in the admin_account_id parameter
 def set_device_assignment_for_app(app_id, state, admin_account_id=1):
 	command = 'mobiledeviceapplications/id/%s' % app_id
 	data = '<mobile_device_application><vpp><assign_vpp_device_based_licenses>%s</assign_vpp_device_based_licenses><vpp_admin_account_id>%s</vpp_admin_account_id></vpp></mobile_device_application>' % (state, admin_account_id)
@@ -231,11 +260,14 @@ def get_device_group(group_id):
 # and_or 		- the combining criteria for this row
 # search_type 	- is/is not/like/not like
 # value 		- the value to match
+#
+# The order of the dictionaries defines the order of the rules.
 def create_smart_device_group(name, criteria):
 	criteriaXML = []
 	priority = 0
 	for criterion in criteria:
-		criteriaXML.append(generate_criterion_xml(criterion, priority))
+		c_xml = '<criterion><name>%s</name><priority>%s</priority><and_or>%s</and_or><search_type>%s</search_type><value>%s</value></criterion>' % (criterion['name'], priority, criterion['and_or'], criterion['search_type'], criterion['value'])
+		criteriaXML.append(c_xml)
 		priority += 1
 
 	createGroupXML = '<mobile_device_group><name>%s</name><is_smart>true</is_smart><criteria>%s</criteria><mobile_devices /></mobile_device_group>' % (name, ''.join(criteriaXML))
@@ -243,10 +275,6 @@ def create_smart_device_group(name, criteria):
 	commandURL = 'mobiledevicegroups/id/0'
 	result = runPostCommand(commandURL, createGroupXML)
 	print result
-
-# Internal Use	
-def generate_criterion_xml(crit, priority):
-	return '<criterion><name>%s</name><priority>%s</priority><and_or>%s</and_or><search_type>%s</search_type><value>%s</value></criterion>' % (crit['name'], priority, crit['and_or'], crit['search_type'], crit['value'])
 
 # Deletes a Device Group
 def delete_device_group(group_id):

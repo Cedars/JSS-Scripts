@@ -4,6 +4,10 @@
 import sys
 import JSSLib
 
+#
+# This script deletes all the user objects in your JSS. All of them.
+#
+
 # Get all Users in JSS
 all_users = JSSLib.get_users()
 

@@ -2,6 +2,7 @@
 
 This repository contains scripts and documentation for managing our JSS.
 
+
 ## Using these Scripts
 
 These scripts should be usable on most Python installations that:
@@ -39,3 +40,6 @@ Universal Profiles are scoped to all (student) iPads unconditionally. Conditiona
 
 User-scoped profiles are scoped to users rather than to devices. This ensures that unconfigured devices still have the appropriate security profiles applied without any personal information - such as email addresses - being on the device.
 
+## Disclaimer
+
+Cedars School of Excellence accepts no responsibility for the correct operation of these scripts or any damage that their use may cause.
