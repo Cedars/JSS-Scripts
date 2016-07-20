@@ -2,7 +2,6 @@
 #coding: utf-8
 
 import sys
-sys.path.insert(0, '..')
 import JSSLib
 
 all_apps = JSSLib.get_apps()
