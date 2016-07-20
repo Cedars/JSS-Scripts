@@ -2,6 +2,21 @@
 
 This repository contains scripts and documentation for managing our JSS.
 
+## Using these Scripts
+
+These scripts should be usable on most Python installations that:
+
+* Have the requests library installed
+* Have JSS-Scripts/lib in your PYTHONPATH
+
+JSS authentication is handled by defining three environment variables:
+
+* MDM_URL - should be of the form https://my.jss.com:8443/JSSResource - no trailing slash
+* MDM_USER - username of an account with API privileges
+* MDM_PASSWORD - password for $MDM_USER
+
+[_Editor's note: what follows is a partial set of notes-to-self about the structure of our JSS that may explain some of the scripts_]
+
 ## Basic JSS Structure
 
 Our JSS is structured according to the following rules:
@@ -23,3 +38,4 @@ There are three kinds of Configuration Profile scopes:
 Universal Profiles are scoped to all (student) iPads unconditionally. Conditional Profiles are scoped to certain groups of devices based on certain conditions expressed in Smart Groups.
 
 User-scoped profiles are scoped to users rather than to devices. This ensures that unconfigured devices still have the appropriate security profiles applied without any personal information - such as email addresses - being on the device.
+
